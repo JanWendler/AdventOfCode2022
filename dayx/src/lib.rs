@@ -14,10 +14,10 @@ mod tests {
     const CONTENT: &str ="";
     #[test]
     fn test_part1() {
-        assert_eq!(part1(CONTENT), 10);
+        assert_eq!(part1(CONTENT).expect(""), 10);
     }
     #[test]
     fn test_part2() {
-        assert_eq!(part2(CONTENT), 10);
+        assert_eq!(part2(CONTENT).expect(""), 10);
     }
 }

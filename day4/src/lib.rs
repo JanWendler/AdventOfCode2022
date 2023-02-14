@@ -33,10 +33,38 @@ fn contains(p11: &u32, p12: &u32, p21: &u32, p22: &u32) -> bool {
 }
 
 pub fn part2(s: &str) -> Result<i32> {
-    let mut sum = 0;
-    Ok(sum)
+    let mut sum= s.lines()
+                  .map(|line| {
+                      line.split_once(",").unwrap()})
+                  .map(|(p1, p2)| {
+                      (p1.split_once("-").unwrap(),
+                       p2.split_once("-").unwrap())})
+                  .map(|((p11, p12), (p21, p22))|
+                      ((p11.parse::<u32>().expect(""),
+                        p12.parse::<u32>().expect("")),
+                       (p21.parse::<u32>().expect(""),
+                        p22.parse::<u32>().expect(""))))
+                  .filter(|((p11, p12),(p21,p22))| {
+                      contains2(p11, p12, p21, p22)})
+                  .count();
+    Ok(sum as i32)
 }
-
+fn contains2(p11: &u32, p12: &u32, p21: &u32, p22: &u32) -> bool {
+    if *p11 == *p21 {
+        return true;
+    }
+    if *p11 <= *p21 {
+        if *p12 >= *p21{
+            return true;
+        }
+    }
+    if *p11 >= *p21 {
+        if *p11 <= *p22{
+            return true;
+        }
+    }
+    false
+}
 #[cfg(test)]
 mod tests {
     use super::*;
